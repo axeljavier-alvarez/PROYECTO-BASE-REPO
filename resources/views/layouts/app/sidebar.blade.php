@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+    <head>
+        @include('partials.head')
+    </head>
+    <body class="min-h-screen bg-white dark:bg-zinc-800">
+        <flux:sidebar sticky collapsible class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+            <flux:sidebar.header>
+                <x-logo class="w-auto h-16" />
+                <flux:sidebar.collapse class="lg:hidden" />
+            </flux:sidebar.header>
+
+            <flux:sidebar.nav>
+                @foreach (Auth::user()->menu as $page)
+                    @if (!empty($page['childrens']))
+                        <flux:sidebar.group 
+                            expandable 
+                            :heading="$page['label']" 
+                            class="grid" 
+                            :icon="$page['icon']"
+                            :expanded="false" >
+                            
+                            @foreach ($page['childrens'] as $children)
+                                <flux:sidebar.item :icon="$children['icon']"
+                                    href="{{ Route::has($children['route']) ? route($children['route']) : '#' }}"
+                                    wire:navigate>
+                                    {{ $children['label'] }}
+                                </flux:sidebar.item>
+                            @endforeach
+                        </flux:sidebar.group>
+                    @else
+                        <flux:sidebar.item :icon="$page['icon']"
+                            href="{{ Route::has($page['route']) ? route($page['route']) : '#' }}" wire:navigate>
+                            {{ $page['label'] }}
+                        </flux:sidebar.item>
+                    @endif
+                @endforeach
+            </flux:sidebar.nav>
+
+            <flux:spacer />
+
+            <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()?->nombre_corto" />
+        </flux:sidebar>
+
+        <!-- Mobile User Menu -->
+        <flux:header class="lg:hidden">
+            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+
+            <flux:spacer />
+
+            <flux:dropdown position="top" align="end">
+                <flux:profile
+                    :initials="auth()->user()->initials()"
+                    icon-trailing="chevron-down"
+                />
+
+                <flux:menu>
+                    <flux:menu.radio.group>
+                        <div class="p-0 text-sm font-normal">
+                            <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
+                                <flux:avatar
+                                    :name="auth()->user()?->nombre_corto"
+                                    :initials="auth()->user()->initials()"
+                                />
+
+                                <div class="grid flex-1 text-start text-sm leading-tight">
+                                    <flux:heading class="truncate">{{ auth()->user()?->nombre_corto }}</flux:heading>
+                                    <flux:text class="truncate">{{ auth()->user()?->information?->correo }}</flux:text>
+                                </div>
+                            </div>
+                        </div>
+                    </flux:menu.radio.group>
+
+                    <flux:menu.separator />
+
+                    <flux:menu.radio.group>
+                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
+                            {{ __('Settings') }}
+                        </flux:menu.item>
+                    </flux:menu.radio.group>
+
+                    <flux:menu.separator />
+
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <flux:menu.item
+                            as="button"
+                            type="submit"
+                            icon="arrow-right-start-on-rectangle"
+                            class="w-full cursor-pointer"
+                            data-test="logout-button"
+                        >
+                            {{ __('Log Out') }}
+                        </flux:menu.item>
+                    </form>
+                </flux:menu>
+            </flux:dropdown>
+        </flux:header>
+
+        {{ $slot }}
+
+        @fluxScripts
+        
+    </body>
+</html>
