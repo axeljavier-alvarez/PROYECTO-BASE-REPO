@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_constancias', function (Blueprint $table) {
+        Schema::create('solicitudes_constancias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('zona_constancias_id')->constrained('zona_constancias')->onDelete('cascade');
-            $table->foreignId('estado_constancias_id')->constrained('estado_constancias')->onDelete('cascade');
+            $table->foreignId('zona_constancia_id')->constrained('zonas_constancias')->onDelete('cascade');
+            $table->foreignId('estado_constancia_id')->constrained('estados_constancias')->onDelete('cascade');
             $table->string('no_solicitud', 15)->nullable();
             $table->integer('anio')->length(4);
             $table->string('nombres', 60);
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('domicilio', 255);
             $table->string('observaciones', 500)->nullable(); 
             $table->string('razon', 255)->nullable();
-            $table->foreignId('tramite_constancias_id')->constrained('tramite_constancias')->restrictOnDelete(); 
+            $table->foreignId('tramite_constancia_id')->constrained('tramites_constancias')->restrictOnDelete(); 
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_constancias');
+        Schema::dropIfExists('solicitudes_constancias');
     }
 };

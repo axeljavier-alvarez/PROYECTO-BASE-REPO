@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zona_constancias', function (Blueprint $table) {
+        Schema::create('estados_constancias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 45);
-      
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zona_constancias');
+        Schema::dropIfExists('estados_constancias');
     }
 };

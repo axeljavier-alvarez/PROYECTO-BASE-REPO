@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bitacora_constancias', function (Blueprint $table) {
+        Schema::create('dependientes_constancias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('solicitud_constancias_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('evento', 50);
-            $table->string('descripcion', 255);
+            $table->string('nombres', 45);
+            $table->string('apellidos', 45);
+            $table->foreignId('detalle_solicitud_id')
+            ->constrained('detalles_solicitudes')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bitacora_constancias');
+        Schema::dropIfExists('dependientes_constancias');
     }
 };

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requisito_tramite_constancias', function (Blueprint $table) {
+        Schema::create('requisitos_tramites_constancias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('requisito_constancia_id')
-                ->constrained('requisito_constancias')
+                ->constrained('requisitos_constancias')
                 ->cascadeOnDelete();
 
             $table->foreignId('tramite_constancia_id')
-                ->constrained('tramite_constancias')
+                ->constrained('tramites_constancias')
                 ->cascadeOnDelete();            
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requisito_tramite_constancias');
+        Schema::dropIfExists('requisitos_tramites_constancias');
     }
 };

@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estado_constancias', function (Blueprint $table) {
+        Schema::create('requisitos_constancias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 45);
+            $table->string('nombre', 255);
+            $table->string('slug', 255);
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estado_constancias');
+        Schema::dropIfExists('requisitos_constancias');
     }
 };

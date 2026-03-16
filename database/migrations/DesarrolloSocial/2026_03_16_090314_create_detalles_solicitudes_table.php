@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalle_solicitudes', function (Blueprint $table) {
+        Schema::create('detalles_solicitudes', function (Blueprint $table) {
             
          $table->id();
             $table->string('path')->nullable();
             $table->string('tipo', 100);
-            $table->foreignId('solicitud_constancias_id')->constrained('solicitud_constancias')->onDelete('cascade');
-            $table->foreignId('requisito_tramite_constancias_id')
+            $table->foreignId('solicitud_constancia_id')->constrained('solicitudes_constancias')->onDelete('cascade');
+            $table->foreignId('requisito_tramite_constancia_id')
             ->nullable()
-            ->constrained('requisito_tramite_constancias')
+            ->constrained('requisitos_tramites_constancias')
             ->onDelete('cascade');
            
             
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detalle_solicitudes');
+        Schema::dropIfExists('detalles_solicitudes');
     }
 };

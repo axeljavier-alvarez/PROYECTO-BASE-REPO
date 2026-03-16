@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requisito_constancias', function (Blueprint $table) {
+        Schema::create('zonas_constancias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 255);
-            $table->string('slug', 255);
+            $table->string('nombre', 45);
+      
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requisito_constancias');
+        Schema::dropIfExists('zonas_constancias');
     }
 };
